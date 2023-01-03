@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlpenistDao implements Dao <Alpenist, Integer>{
+public class AlpenistDao {/*implements Dao <Alpenist, Integer>{
     //вынести в рефлексию
     public void createTable(){
         String create = "CREATE TABLE IF NOT EXISTS alpenists(" +
@@ -160,7 +160,8 @@ public class AlpenistDao implements Dao <Alpenist, Integer>{
         // finally - close вызывается по месту объявления блока finally, после try-catch
 
         return alpenists;
-    }
+    }*/
 }
+
 
 

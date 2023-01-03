@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import Help.ParentClass;
 
 import javax.xml.namespace.QName;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,9 +21,8 @@ public class Alpenist extends ParentClass {
     @Column (nullable = false)
     private int age;
 
-    @ManyToOne
-    @Transient
-    private Groups groups;
+    @OneToMany
+    private List<Groups> groups;
 
 
     public Alpenist() {
@@ -66,5 +66,37 @@ public class Alpenist extends ParentClass {
         if (age < 18)
             throw new IllegalArgumentException("Возраст не должен быть меньше 18 лет");
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Alpenist alpenist = (Alpenist) o;
+
+        if (age != alpenist.age) return false;
+        if (!Objects.equals(name, alpenist.name)) return false;
+        if (!Objects.equals(address, alpenist.address)) return false;
+        return Objects.equals(groups, alpenist.groups);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + age;
+        result = 31 * result + (groups != null ? groups.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Alpenist{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", age=" + age +
+                ", groups=" + groups +
+                '}';
     }
 }

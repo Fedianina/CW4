@@ -8,10 +8,9 @@ import tables.Mountain;
 public class pvs {
     public static void main(String[] args) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("ormLesson");//создали фабрику для создания классов (инфа из круглыхскобок взята из ресурса)
-
-
         EntityManager manager = factory.createEntityManager();//создали менеджера, который будет создавать объекты
         Mountain mountain1 = new Mountain("logfd", "fsfsd", 1234545);
+        System.out.println(mountain1);
         // TODO заполнить
         //TODO обернуть в трай
 
@@ -30,8 +29,10 @@ public class pvs {
         manager.remove(fromBD); //по первичному ключу
         manager.getTransaction().commit();
 
+        */
         //Alpenist alpenist1 = new Alpenist("Mike", "Lensoveta 15", 20);
-*/
+
+
 
     }
 }

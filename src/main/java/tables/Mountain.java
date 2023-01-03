@@ -3,6 +3,9 @@ package tables;
 import jakarta.persistence.*;
 import Help.ParentClass;
 
+import java.util.List;
+import java.util.Objects;
+
 @Entity//создаем таблицу
 @Table//создаем таблицу
 public class Mountain extends ParentClass {
@@ -16,9 +19,8 @@ public class Mountain extends ParentClass {
     @Column (nullable = false)
     private int height;
 
-    @OneToOne
-    @Transient
-    private Groups groups;
+    @OneToMany
+    private List <Groups> groups;
 
 
     public Mountain() {
@@ -58,5 +60,37 @@ public class Mountain extends ParentClass {
         if (height<100)
             throw new IllegalArgumentException("Высота горы должна быть не ниже");
         this.height = height;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Mountain mountain = (Mountain) o;
+
+        if (height != mountain.height) return false;
+        if (!Objects.equals(name, mountain.name)) return false;
+        if (!Objects.equals(country, mountain.country)) return false;
+        return Objects.equals(groups, mountain.groups);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + height;
+        result = 31 * result + (groups != null ? groups.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Mountain{" +
+                "name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", height=" + height +
+                ", groups=" + groups +
+                '}';
     }
 }

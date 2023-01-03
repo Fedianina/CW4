@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import Help.ParentClass;
 
@@ -21,10 +22,10 @@ public class Groups extends ParentClass {
 
 
     @Column(nullable = false)
-    @OneToMany (mappedBy = "groups", orphanRemoval = true)
+    @ManyToMany(mappedBy = "groups")
     private List <Alpenist> alpenists;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     @OneToOne(mappedBy = "groups")
     private Mountain mountain;
 
@@ -72,6 +73,43 @@ public class Groups extends ParentClass {
     public void setDateOfAscent(LocalDateTime dateOfAscent) {
         this.dateOfAscent = dateOfAscent;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Groups groups = (Groups) o;
+
+        if (recruitmentStatus != groups.recruitmentStatus) return false;
+        if (maximumParticipants != groups.maximumParticipants) return false;
+        if (!Objects.equals(alpenists, groups.alpenists)) return false;
+        if (!Objects.equals(mountain, groups.mountain)) return false;
+        return Objects.equals(dateOfAscent, groups.dateOfAscent);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = alpenists != null ? alpenists.hashCode() : 0;
+        result = 31 * result + (mountain != null ? mountain.hashCode() : 0);
+        result = 31 * result + (recruitmentStatus ? 1 : 0);
+        result = 31 * result + maximumParticipants;
+        result = 31 * result + (dateOfAscent != null ? dateOfAscent.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Groups{" +
+                "alpenists=" + alpenists +
+                ", mountain=" + mountain +
+                ", recruitmentStatus=" + recruitmentStatus +
+                ", maximumParticipants=" + maximumParticipants +
+                ", dateOfAscent=" + dateOfAscent +
+                '}';
+    }
+
 
 
     public void isOpenClose(){
