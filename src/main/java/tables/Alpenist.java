@@ -22,7 +22,7 @@ public class Alpenist extends ParentClass {
     @Column (nullable = false)
     private int age;
 
-    @ManyToMany
+    @ManyToMany (mappedBy = "alpenists")
     @JoinColumn
     private List<Groups> groups;
 

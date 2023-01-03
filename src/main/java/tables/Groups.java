@@ -1,8 +1,13 @@
 package tables;
 
 
+import db.base.ConnectionSettings;
 import jakarta.persistence.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,20 +19,11 @@ import Help.ParentClass;
 @Entity
 @Table
 public class Groups extends ParentClass {
-    //Группа для восхождения на гору создаётся со следующими характеристиками и возможностями:
-    //альпинисты
-    //гора
-    //идёт набор в группу или нет
-    //максимальное количество участников
-    //дата и время восхождения
-
-
-    //@Column(nullable = false)
     @JoinColumn
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany
+    @JoinTable(name="alpenist_groups")
     private List <Alpenist> alpenists;
 
-    //@Column(nullable = false)
     @ManyToOne
     private Mountain mountain;
 
@@ -137,13 +133,12 @@ public class Groups extends ParentClass {
     public void addAlpenist(Alpenist alpenist){
         isOpenClose();
         if (recruitmentStatus){
-           // alpenists.add(alpenist);
-           EntityManagerFactory factory = Persistence.createEntityManagerFactory("ormLesson");
-            EntityManager manager = factory.createEntityManager();
-            manager.getTransaction().begin();// добавление класса в табл проходит в рамках транзакции
-            manager.persist(alpenist);//хотим добавить объект, перечисляем все запроссы, которые дб выполнены
-            manager.getTransaction().commit();
             alpenists.add(alpenist);
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("ormLesson");
+            EntityManager manager = factory.createEntityManager();
+            manager.getTransaction().begin();
+            manager.merge(this);
+            manager.getTransaction().commit();
         }
     }
 }
