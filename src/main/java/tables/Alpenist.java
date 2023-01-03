@@ -12,6 +12,7 @@ import java.util.Objects;
 @Table
 public class Alpenist extends ParentClass {
 
+
     @Column(nullable = false)
     private String name;
 
@@ -21,7 +22,8 @@ public class Alpenist extends ParentClass {
     @Column (nullable = false)
     private int age;
 
-    @OneToMany
+    @ManyToMany
+    @JoinColumn
     private List<Groups> groups;
 
 

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +22,8 @@ public class Groups extends ParentClass {
     //дата и время восхождения
 
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
+    @JoinColumn
     @ManyToMany(mappedBy = "groups")
     private List <Alpenist> alpenists;
 
@@ -30,7 +32,7 @@ public class Groups extends ParentClass {
     private Mountain mountain;
 
     @Column(nullable = false)
-    private boolean recruitmentStatus;
+    private boolean recruitmentStatus = true;
 
     @Column(nullable = false)
     private int maximumParticipants = 0;
@@ -40,6 +42,21 @@ public class Groups extends ParentClass {
 
 
     public Groups() {
+    }
+
+    public Groups(Mountain mountain, int maximumParticipants, LocalDateTime dateOfAscent) {
+        this.alpenists=new ArrayList<>();
+        setMountain(mountain);
+        setMaximumParticipants(maximumParticipants);
+        setDateOfAscent(dateOfAscent);
+    }
+
+    public List<Alpenist> getAlpenists() {
+        return alpenists;
+    }
+
+    public void setAlpenists(List<Alpenist> alpenists) {
+        this.alpenists = alpenists;
     }
 
     public Mountain getMountain() {
@@ -73,7 +90,6 @@ public class Groups extends ParentClass {
     public void setDateOfAscent(LocalDateTime dateOfAscent) {
         this.dateOfAscent = dateOfAscent;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -121,14 +137,13 @@ public class Groups extends ParentClass {
     public void addAlpenist(Alpenist alpenist){
         isOpenClose();
         if (recruitmentStatus){
-            alpenists.add(alpenist);
-           /* EntityManagerFactory factory = Persistence.createEntityManagerFactory("ormLesson");
+           // alpenists.add(alpenist);
+           EntityManagerFactory factory = Persistence.createEntityManagerFactory("ormLesson");
             EntityManager manager = factory.createEntityManager();
             manager.getTransaction().begin();// добавление класса в табл проходит в рамках транзакции
             manager.persist(alpenist);//хотим добавить объект, перечисляем все запроссы, которые дб выполнены
             manager.getTransaction().commit();
             alpenists.add(alpenist);
-            repaint();*/
         }
     }
 }

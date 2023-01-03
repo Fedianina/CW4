@@ -9,7 +9,7 @@ import jakarta.persistence.MappedSuperclass;
 public abstract class ParentClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    protected int id;
 
     public int getId() {
         return id;

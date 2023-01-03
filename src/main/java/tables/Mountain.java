@@ -11,6 +11,7 @@ import java.util.Objects;
 public class Mountain extends ParentClass {
 //Гора создаётся с названием (не менее 4 символов),
 // страной (не менее 4 символов) и высотой (не менее 100 метров)
+
     @Column (unique = true, nullable = false)//название дублироваться не может и не может быть налом
 
     private String name;
@@ -19,7 +20,7 @@ public class Mountain extends ParentClass {
     @Column (nullable = false)
     private int height;
 
-    @OneToMany (mappedBy = "mountain")
+    @OneToMany //(mappedBy = "mountain")
     private List <Groups> groups;
 
 
@@ -27,6 +28,9 @@ public class Mountain extends ParentClass {
     }
 
     public Mountain(String name, String country, int height){
+        setCountry(country);
+        setName(name);
+        setHeight(height);
 
 
     }
