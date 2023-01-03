@@ -19,7 +19,7 @@ public class Mountain extends ParentClass {
     @Column (nullable = false)
     private int height;
 
-    @OneToMany
+    @OneToMany (mappedBy = "mountain")
     private List <Groups> groups;
 
 

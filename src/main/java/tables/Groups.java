@@ -26,7 +26,7 @@ public class Groups extends ParentClass {
     private List <Alpenist> alpenists;
 
     //@Column(nullable = false)
-    @OneToOne(mappedBy = "groups")
+    @ManyToOne
     private Mountain mountain;
 
     @Column(nullable = false)
